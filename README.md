@@ -1,2 +1,2 @@
-# service-log
-Message Logger Molfar Service
+# service-lang-detector
+Language Detector Molfar Service

@@ -1,0 +1,64 @@
+msapi: 1.0.1
+
+metadata: 
+    title: Message Logger. @molfar Service.
+    id: "@molfar/service/lang-detector"
+    
+components:
+
+    schemas:
+        
+        MESSAGE:
+            type: object
+            required:
+                - type
+                - url
+            properties:
+                type:
+                    type: string
+                url:
+                    type: string
+                    format: uri-reference
+                metadata:
+                    type: object
+                createdAt:
+                    type: string
+                md5:
+                    type: string
+
+service:
+
+    config: 
+
+        amqp:
+            url:
+                type: string
+                format: uri-reference
+        queue_name:
+            type: string
+
+        exchange_name:
+            type: string    
+
+        log:
+            type: string        
+
+    consume:
+        amqp: 
+            $ref: "#/service/config/amqp"
+        queue:
+            name: 
+                $ref: "#/service/config/queue_name"
+            exchange:
+                name:  
+                    $ref: "#/service/config/exchange_name"
+                mode: fanout
+                options:
+                    durable: true
+                    persistent: true
+            options:
+                noAck: false 
+                exclusive: false   
+        message:
+            $ref: "#/components/schemas/MESSAGE"
+    

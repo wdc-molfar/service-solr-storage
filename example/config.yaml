@@ -1,0 +1,39 @@
+msapi: 1.0.1
+
+metadata: 
+    title: Message Logger Config. @molfar Service.
+    id: "@molfar/service/ner/example"
+    
+
+service:
+
+    config:
+        log: "./logs/ner_messages.log"
+    
+    consume:
+        
+        amqp: 
+            url: amqps://xoilebqg:Nx46t4t9cxQ2M0rF2rIyZPS_xbAhmJIG@hornet.rmq.cloudamqp.com/xoilebqg
+        
+        queue:
+            name: ner_messages
+            exchange:
+                name: ner_messages 
+        
+        message:
+            type: object
+            required:
+                - type
+                - url
+            properties:
+                type:
+                    type: string
+                url:
+                    type: string
+                    format: uri-reference
+                metadata:
+                    type: object
+                createdAt:
+                    type: string
+                md5:
+                    type: string
