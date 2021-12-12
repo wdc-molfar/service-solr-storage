@@ -11,8 +11,8 @@ let service = new ServiceWrapper({
     async onConfigure(config, resolve) {
         this.config = config
         const logFile = this.config.service.config.log
-        console.log("configure logger", this.config._instance_id)
-        console.log(`Open log ${logFile}`)
+        console.log(`configure ${ this.config._instance_name || this.config._instance_id}`)
+        console.log(`${ this.config._instance_name || this.config._instance_id} > Open log ${logFile}`)
 
         this.logger = logger(logFile)
 
@@ -28,7 +28,6 @@ let service = new ServiceWrapper({
 
             async (err, msg, next) => {
                 let m = msg.content
-                console.log(m)
                 this.logger.log(JSON.stringify(m, null, " "))
                 msg.ack()
             }
@@ -41,13 +40,13 @@ let service = new ServiceWrapper({
     },
 
     onStart(data, resolve) {
-        console.log("start logger", this.config._instance_id)
+        console.log(`start ${ this.config._instance_name || this.config._instance_id}`)
         this.consumer.start()
         resolve({ status: "started" })
     },
 
     async onStop(data, resolve) {
-        console.log("stop logger", this.config._instance_id)
+        console.log(`stop ${ this.config._instance_name || this.config._instance_id}`)
         await this.consumer.close()
         resolve({ status: "stoped" })
     }
