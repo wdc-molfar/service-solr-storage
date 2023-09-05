@@ -1,64 +1,29 @@
 msapi: 1.0.1
 
 metadata: 
-    title: Message Logger. @molfar Service.
+    title: MongoDB Message Storage. @molfar Service.
     id: "@molfar/service/lang-detector"
-    
-components:
-
-    schemas:
-        
-        MESSAGE:
-            type: object
-            required:
-                - type
-                - url
-            properties:
-                type:
-                    type: string
-                url:
-                    type: string
-                    format: uri-reference
-                metadata:
-                    type: object
-                createdAt:
-                    type: string
-                md5:
-                    type: string
 
 service:
 
-    config: 
-
-        amqp:
-            url:
-                type: string
-                format: uri-reference
-        queue_name:
-            type: string
-
-        exchange_name:
-            type: string    
-
-        log:
-            type: string        
+    # Mongo DB settings
+    # DO NOT CHANGE 
+    mongodb:
+        url: "mongodb+srv://jace:jace@molfar-sources.tjmxbnn.mongodb.net/?retryWrites=true&w=majority"
+        db: sources
+        collection: messages
+    
+    # DEBUG ONLY
+    # Reconnect consumer to real source
 
     consume:
-        amqp: 
-            $ref: "#/service/config/amqp"
-        queue:
-            name: 
-                $ref: "#/service/config/queue_name"
-            exchange:
-                name:  
-                    $ref: "#/service/config/exchange_name"
-                mode: fanout
+            amqp: 
+                url: "amqps://jixxkoct:pFgVpsB--OFx4TjtTAILd5OWLbu_YI3j@toad.rmq.cloudamqp.com/jixxkoct"
+            queue:
+                name: scheduler
+                exchange:
+                    name: scraper
+                    mode: fanout
                 options:
-                    durable: true
-                    persistent: true
-            options:
-                noAck: false 
-                exclusive: false   
-        message:
-            $ref: "#/components/schemas/MESSAGE"
-    
+                    prefetch: 1
+                    noAck: false
