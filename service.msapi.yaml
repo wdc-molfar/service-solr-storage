@@ -2,7 +2,7 @@ msapi: 1.0.1
 
 metadata: 
     title: MongoDB Message Storage. @molfar Service.
-    id: "@molfar/service/lang-detector"
+    id: "@molfar/service/service-mongo-storage"
 
 service:
 
@@ -10,7 +10,7 @@ service:
     # DO NOT CHANGE 
     mongodb:
         url: "mongodb+srv://jace:jace@molfar-sources.tjmxbnn.mongodb.net/?retryWrites=true&w=majority"
-        db: sources
+        db: test-messages
         collection: messages
     
     # DEBUG ONLY
@@ -19,11 +19,15 @@ service:
     consume:
             amqp: 
                 url: "amqps://jixxkoct:pFgVpsB--OFx4TjtTAILd5OWLbu_YI3j@toad.rmq.cloudamqp.com/jixxkoct"
+    
             queue:
-                name: scheduler
+                name: scraper
                 exchange:
                     name: scraper
                     mode: fanout
+                    options:
+                        durable: true
+                        persistent: true
                 options:
-                    prefetch: 1
-                    noAck: false
+                    noAck: false 
+                    exclusive: false        

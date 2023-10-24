@@ -1,5 +1,5 @@
 {
-  "name": "@molfar/service-lang-detector",
+  "name": "@molfar/service-mongo-storage",
   "version": "1.0.0",
   "description": "Language Detector Molfar Service",
   "main": "index.js",

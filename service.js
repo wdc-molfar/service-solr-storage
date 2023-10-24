@@ -6,10 +6,20 @@ let service = new ServiceWrapper({
     consumer: null,
     config: null,
     
+    //-------------- Add heartbeat exported method
+
+         async onHeartbeat(data, resolve){
+            resolve({})
+        },
+ 
+    //--------------------------------------------
+
+
+
     async onConfigure(config, resolve) {
         this.config = config
-        console.log(`configure ${ this.config._instance_name || this.config._instance_id}`)
-        console.log(JSON.stringify(this.config, null, " "))
+        console.log(new Date(), `configure ${ this.config._instance_name || this.config._instance_id}`)
+        console.log(new Date(), JSON.stringify(this.config, null, " "))
         
         this.mongodb = require("./lib/mongodb")(this.config)
 
@@ -21,17 +31,26 @@ let service = new ServiceWrapper({
             Middlewares.Error.BreakChain,
 
             async (err, msg, next) => {
+                if (err) next()    
                 let m = msg.content
+
+                console.log(new Date(), "consume", JSON.stringify(m, null, " "))
+                
                 if(m.scraper && m.scraper.message){
                     try {
-                        await this.mongodb.insertOne(
+
+                        let res = await this.mongodb.insertOne(
                             `${this.config.service.mongodb.db}.${this.config.service.mongodb.collection}`,
                             {"scraper.message.md5": m.scraper.message.md5},
                             m
                         )
+                        console.log(new Date(), `insert into ${this.config.service.mongodb.db}.${this.config.service.mongodb.collection} md5: ${m.scraper.message.md5}`, res)
                     } catch (e) {
                         console.log(e.toString())
                     }
+                
+                } else {
+                    console.log(new Date(), "ignore (no scraper or message)", JSON.stringify(m, null, " "))
                 }
 
                 msg.ack()
