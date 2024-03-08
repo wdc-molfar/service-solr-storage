@@ -1,18 +1,22 @@
 msapi: 1.0.1
 
 metadata: 
-    title: MongoDB Message Storage. @molfar Service.
-    id: "@molfar/service/service-mongo-storage"
+    title: Solr Message Storage. @molfar Service.
+    id: "@molfar/service/service-solr-storage"
 
 service:
+    ############################################################
+    #  use this options in service.js as baseURL and url for update 
+    ############################################################
 
-    # Mongo DB settings
-    # DO NOT CHANGE 
-    mongodb:
-        url: "mongodb+srv://jace:jace@molfar-sources.tjmxbnn.mongodb.net/?retryWrites=true&w=majority"
-        db: test-messages
-        collection: messages
-    
+    # solr:
+    #     url: http://localhost:8983/solr
+    #     collection: messages
+
+    ############################################################
+
+
+
     # DEBUG ONLY
     # Reconnect consumer to real source
 

@@ -1,5 +1,5 @@
 {
-  "name": "@molfar/service-mongo-storage",
+  "name": "@molfar/service-solr-storage",
   "version": "1.0.0",
   "description": "Language Detector Molfar Service",
   "main": "index.js",
@@ -8,21 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wdc-molfar/service-lang-detector.git"
+    "url": "git+https://github.com/wdc-molfar/service-solr-storage.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wdc-molfar/service-lang-detector/issues"
+    "url": "https://github.com/wdc-molfar/service-solr-storage/issues"
   },
-  "homepage": "https://github.com/wdc-molfar/service-lang-detector#readme",
+  "homepage": "https://github.com/wdc-molfar/service-solr-storage#readme",
   "dependencies": {
     "@molfar/amqp-client": "github:wdc-molfar/amqp-client",
     "@molfar/csc": "github:wdc-molfar/csc",
-    "langs": "^2.0.0",
-    "languagedetect": "^2.0.0",
+    "axios": "^1.6.7",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
-    "mongodb": "^4.13.0"
+    "moment": "^2.29.1"
   }
 }

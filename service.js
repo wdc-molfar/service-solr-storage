@@ -1,6 +1,7 @@
 const { ServiceWrapper } = require("@molfar/csc")
 const { AmqpManager, Middlewares } = require("@molfar/amqp-client")
 const path = require("path")
+const axios = require("axios")
 
 let service = new ServiceWrapper({
     consumer: null,
@@ -25,6 +26,10 @@ let service = new ServiceWrapper({
 
         this.consumer = await AmqpManager.createConsumer(this.config.service.consume)
 
+        /////////////////////// SET AXIOS baseURL (need for no 80 port) /////////////////// 
+        axios.defaults.baseURL = config.service.solr.url
+        ///////////////////////////////////////////////////////////////////////////////////
+
         await this.consumer.use([
             Middlewares.Json.parse,
             Middlewares.Error.Log,
@@ -36,7 +41,23 @@ let service = new ServiceWrapper({
 
                 console.log(new Date(), "consume", JSON.stringify(m, null, " "))
                 
+                
                 if(m.scraper && m.scraper.message){
+                
+                //////////////////// AXIOS post example //////////////////////////////////    
+                    
+                    // axios.post(
+                          // `/${config.service.solr.collection}//update/json/docs`,
+                          // m  
+                    // )
+
+                //////////////////////////////////////////////////////////////////////////    
+
+                
+                /////////////////// TODO replace this code ////////////////////////////////
+
+                    
+
                     try {
 
                         let res = await this.mongodb.insertOne(
@@ -48,10 +69,15 @@ let service = new ServiceWrapper({
                     } catch (e) {
                         console.log(e.toString())
                     }
+
+                
+                ///////////////////////////////////////////////////////////////////////////////
+    
                 
                 } else {
                     console.log(new Date(), "ignore (no scraper or message)", JSON.stringify(m, null, " "))
                 }
+
 
                 msg.ack()
                
