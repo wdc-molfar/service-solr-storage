@@ -56,19 +56,31 @@ let service = new ServiceWrapper({
                 
                 /////////////////// TODO replace this code ////////////////////////////////
 
-                    
+
 
                     try {
-
-                        let res = await this.mongodb.insertOne(
-                            `${this.config.service.mongodb.db}.${this.config.service.mongodb.collection}`,
-                            {"scraper.message.md5": m.scraper.message.md5},
-                            m
-                        )
-                        console.log(new Date(), `insert into ${this.config.service.mongodb.db}.${this.config.service.mongodb.collection} md5: ${m.scraper.message.md5}`, res)
+                        axios({
+                            method: 'post',
+                            url: 'http://localhost:8983/solr/core/update/json/docs',
+                            data: [m.scraper.message]
+                        }).then((response) => {
+                            console.log(response);
+                        }, (error) => {
+                            console.log(error);
+                        });
                     } catch (e) {
                         console.log(e.toString())
                     }
+                    // try {
+                    //     let res = await this.mongodb.insertOne(
+                    //         `${this.config.service.mongodb.db}.${this.config.service.mongodb.collection}`,
+                    //         {"scraper.message.md5": m.scraper.message.md5},
+                    //         m
+                    //     )
+                    //     console.log(new Date(), `insert into ${this.config.service.mongodb.db}.${this.config.service.mongodb.collection} md5: ${m.scraper.message.md5}`, res)
+                    // } catch (e) {
+                    //     console.log(e.toString())
+                    // }
 
                 
                 ///////////////////////////////////////////////////////////////////////////////
