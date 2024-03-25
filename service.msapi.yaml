@@ -9,9 +9,9 @@ service:
     #  use this options in service.js as baseURL and url for update 
     ############################################################
 
-    # solr:
-    #     url: http://localhost:8983/solr
-    #     collection: messages
+     solr:
+         url: http://localhost:8983/solr
+         collection: messages
 
     ############################################################
 

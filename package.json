@@ -20,7 +20,6 @@
     "@molfar/amqp-client": "github:wdc-molfar/amqp-client",
     "@molfar/csc": "github:wdc-molfar/csc",
     "axios": "^1.6.7",
-    "lodash": "^4.17.21",
     "moment": "^2.29.1"
   }
 }
