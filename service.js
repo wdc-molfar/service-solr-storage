@@ -51,8 +51,16 @@ let service = new ServiceWrapper({
                             }, (error) => {
                                 console.log(error);
                             });
+                            axios({
+                                method:"post",
+                                url: `/admin/collections?action=RELOAD&name=${config.service.solr.collection}`
+                            }).then((response) => {
+                                console.log(response);
+                            }, (error) => {
+                                console.log(error);
+                            });
                         }else{
-                            console.log("already exists", m.scraper.message.text, m.scraper.message.md5)
+                            console.log("already exists\n", m.scraper.message.text, m.scraper.message.md5)
                         }
                     } catch (e) {
                         console.log(e.toString())
